@@ -59,8 +59,8 @@ exec.MouseButton1Click:Connect(function()
     if s and s ~= "" then
         local f, err = loadstring(s)
         if f then
-            pcall(setfenv(f, getfenv()))
-            pcall(f)
+            setfenv(f, getfenv())   -- يضبط البيئة بس
+pcall(f)                -- يشغّل الكود مرة واحدة وبـ pcall
         else
             warn(err)
         end
