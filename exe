@@ -1,4 +1,4 @@
-local raw = "https://pastebin.com/raw/XXXXXXXX" -- رابط خام لنفس السكربت لو حبيت يشتغل بعد rejoin
+local raw = "https://raw.githubusercontent.com/FaresXForest/EXECUTOR/refs/heads/main/exe" -- رابط خام لنفس السكربت لو حبيت يشتغل بعد rejoin
 
 if queue_on_teleport then
     queue_on_teleport(('loadstring(game:HttpGet("%s"))()'):format(raw))
