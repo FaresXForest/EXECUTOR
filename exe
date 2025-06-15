@@ -1,0 +1,78 @@
+local raw = "https://pastebin.com/raw/XXXXXXXX" -- رابط خام لنفس السكربت لو حبيت يشتغل بعد rejoin
+
+if queue_on_teleport then
+    queue_on_teleport(('loadstring(game:HttpGet("%s"))()'):format(raw))
+end
+
+local gui = Instance.new("ScreenGui", game.CoreGui)
+gui.Name = "MiniExecutor"
+gui.ResetOnSpawn = false
+
+local frame = Instance.new("Frame", gui)
+frame.Size = UDim2.new(0, 360, 0, 260)
+frame.Position = UDim2.new(0.5, -180, 0.5, -130)
+frame.BackgroundColor3 = Color3.fromRGB(35,35,35)
+frame.Active = true
+frame.Draggable = true
+
+local title = Instance.new("TextLabel", frame)
+title.Size = UDim2.new(1, 0, 0, 30)
+title.Text = "🔧 فارس & Fo Executor"
+title.TextColor3 = Color3.new(1, 1, 1)
+title.BackgroundTransparency = 1
+title.Font = Enum.Font.SourceSansBold
+title.TextSize = 24
+
+local box = Instance.new("TextBox", frame)
+box.Size = UDim2.new(1, -10, 1, -90)
+box.Position = UDim2.new(0, 5, 0, 35)
+box.Text = "-- ضع الكود هنا"
+box.ClearTextOnFocus = false
+box.MultiLine = true
+box.Font = Enum.Font.Code
+box.TextSize = 16
+box.TextColor3 = Color3.fromRGB(235,235,235)
+box.BackgroundColor3 = Color3.fromRGB(25,25,25)
+box.TextXAlignment = Enum.TextXAlignment.Left
+box.TextYAlignment = Enum.TextYAlignment.Top
+
+local exec = Instance.new("TextButton", frame)
+exec.Size = UDim2.new(0.5, -8, 0, 35)
+exec.Position = UDim2.new(0, 5, 1, -40)
+exec.Text = "▶️ Execute"
+exec.BackgroundColor3 = Color3.fromRGB(0,170,0)
+exec.TextColor3 = Color3.new(1,1,1)
+exec.Font = Enum.Font.SourceSansBold
+exec.TextSize = 22
+
+local clr = Instance.new("TextButton", frame)
+clr.Size = UDim2.new(0.5, -8, 0, 35)
+clr.Position = UDim2.new(0.5, 3, 1, -40)
+clr.Text = "🗑️ Clear"
+clr.BackgroundColor3 = Color3.fromRGB(170,0,0)
+clr.TextColor3 = Color3.new(1,1,1)
+clr.Font = Enum.Font.SourceSansBold
+clr.TextSize = 22
+
+exec.MouseButton1Click:Connect(function()
+    local s = box.Text
+    if s and s ~= "" then
+        local f, err = loadstring(s)
+        if f then
+            pcall(setfenv(f, getfenv()))
+            pcall(f)
+        else
+            warn(err)
+        end
+    end
+end)
+
+clr.MouseButton1Click:Connect(function()
+    box.Text = ""
+end)
+
+game:GetService("StarterGui"):SetCore("SendNotification", {
+    Title = "✅ Executor جاهز",
+    Text = "انسخ الكود واضغط ▶️",
+    Duration = 5
+})
